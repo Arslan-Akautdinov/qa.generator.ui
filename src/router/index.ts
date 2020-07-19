@@ -18,11 +18,6 @@ const routes: Array<RouteConfig> = [
     name: 'Pushgen',
     alias: "menu",
     component: Pushgen
-  },
-  {
-    path: '/streams/:stream_uuid',
-    name: 'stream',
-    component: StreamItem
   }
 ]
 

@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <ModalStream />
+        <ModalStreamCreate />
         <content class="content">
             <PageTitle :title="'Список потоков'" />
             <StreamList :streams="this.streamList" />
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import ModalStream from '@/components/ModalStream.vue'
+import ModalStreamCreate from '@/components/ModalStreamCreate.vue'
 import { Component, Vue } from 'vue-property-decorator';
 import { State, Action, Getter } from "vuex-class";
 import PageTitle from '@/components/PageTitle.vue'
@@ -20,10 +20,10 @@ import { Stream } from '../store/stream/types';
 
 const namespace = "stream";
 
-@Component({components: {PageTitle, StreamList, Sidebar, ModalStream}})
+@Component({components: {PageTitle, StreamList, Sidebar, ModalStreamCreate}})
 export default class Streams extends Vue 
 {
-    @Action("setStreams", { namespace })
+    @Action("streamSelect", { namespace })
     setStreams: any
 
     @Getter("getStreams", { namespace })

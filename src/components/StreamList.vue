@@ -4,8 +4,8 @@
             <div class="stream__item" v-for="stream in this.streams" :key="stream.id">
                 <p class="stream__name">{{ `${stream.file_name}.${stream.file_type}` }}</p>
                 <div class="tools">
-                    <button @click="$copyText(stream.rtsp_url)" class="tools__item copy">Копировать</button>
-                    <router-link :to="{ path:`/streams/${stream.uuid}`, params: { stream_uuid: stream.uuid }}" class="tools__item view">Перейти</router-link>
+                    <button @click="$copyText(stream.rtsp_url)" class="tools__item">Копировать</button>
+                    <button @click="openStream(stream.uuid)" class="tools__item">Перейти</button>
                 </div>
             </div>
         </div>
@@ -13,16 +13,40 @@
 </template>
 
 
-
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Stream } from '../store/stream/types';
+import { Getter } from 'vuex-class';
+
+import ModalStreamSelect from './ModalStreamSelect.vue';
+import VueJSModal from 'vue-js-modal'
+
+const namespace = "stream";
 
 @Component
 export default class StreamList extends Vue 
 {
     @Prop()
     public streams!: Array<Stream>
+
+    @Getter("getStreams", { namespace })
+    streamList!: Array<Stream>;
+
+    public openStream(uuid: string): void
+    {
+        let str: any = null
+        this.streamList.forEach(stream => {
+            if (stream.uuid == uuid)
+            {
+                str = stream
+            }
+        })
+        this.$modal.show(
+            ModalStreamSelect,
+            {streamItem: str},
+            {maxHeight:660, maxWidth:760, minHeight:550, minWidth:760, adaptive: true}
+        )
+    }
 }
 </script>
 
@@ -66,19 +90,8 @@ export default class StreamList extends Vue
             border: none;
             cursor: pointer;
             font-size: 16px;
-           
-        }
-
-        .copy
-        {
             color:#5352ed;
         }
-
-        .view
-        {
-            color:#5352ed;
-        }
-
     }
 
 
