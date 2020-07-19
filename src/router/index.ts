@@ -1,22 +1,28 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
+import Streams from '@/views/Streams.vue'
+import StreamItem from '@/views/StreamItem.vue'
+import Pushgen from '@/views/Pushgen.vue'
 
 Vue.use(VueRouter)
 
-  const routes: Array<RouteConfig> = [
+const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/streams',
+    name: 'RTSP',
+    alias: "menu",
+    component: Streams
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/pushgen',
+    name: 'Pushgen',
+    alias: "menu",
+    component: Pushgen
+  },
+  {
+    path: '/streams/:stream_uuid',
+    name: 'stream',
+    component: StreamItem
   }
 ]
 
@@ -26,4 +32,18 @@ const router = new VueRouter({
   routes
 })
 
+export const menuRoutes = () => 
+{
+  const menues = new Array<RouteConfig>()
+  routes.forEach(function(route)
+  {
+    if (route.alias == "menu")
+    {
+      menues.push(route)
+    }
+  });
+  return menues
+}
+
 export default router
+
