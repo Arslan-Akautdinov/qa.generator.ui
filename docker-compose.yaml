@@ -1,0 +1,14 @@
+version: '3'
+
+services: 
+
+    qa_generator_ui:
+        build: .
+        tty: true
+        ports: 
+            - "5500:5500"
+        volumes:
+            - ./:/qa_generator_ui
+        working_dir: /qa_generator_ui
+        command: npm i
+        command: npm run serve -- --port 5500

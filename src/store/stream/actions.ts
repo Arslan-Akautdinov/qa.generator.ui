@@ -8,17 +8,18 @@ const head = { ContentType: "application/json" }
 
 function addStreams(stream: any)
 {
-  return axios.post('http://127.0.0.1:5500/api/v1/streams', stream, { headers: head}).then((response) => response.data);
+  return axios.post(`${process.env.VUE_APP_API_URL}/api/v1/streams`, stream, { headers: head}).then((response) => response.data);
 }
 
 function getStreams()
 {
-  return axios.get('http://127.0.0.1:5500/api/v1/streams').then((response) => response.data);
+  console.log(process.env.VUE_APP_API_URL)
+  return axios.get(`${process.env.VUE_APP_API_URL}/api/v1/streams`).then((response) => response.data);
 }
 
 function delStreams(uuid: string)
 {
-  return axios.delete(`http://127.0.0.1:5500/api/v1/streams/${uuid}`).then((response) => response.data);
+  return axios.delete(`${process.env.VUE_APP_API_URL}/api/v1/streams/${uuid}`).then((response) => response.data);
 }
 
 
